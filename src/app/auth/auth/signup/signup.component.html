@@ -1,0 +1,254 @@
+
+<div class="page-inner" style="top: 60px;">
+  <div class="main-wrapper">
+    <div class="row">
+      <div class="col-md-8 center">
+        <a [routerLink]="['/']" class="logo-name text-lg text-center">
+          <img src="assets/img/logo.png" alt="">
+      </a>
+      <h3>Welcome User. Please register here.</h3>
+        <div class="">
+          <div class="login-box" id="card" style="text-align: center;">          
+           
+            <div class="register-form">
+              <form #signupForm="ngForm" (ngSubmit)="onSubmit()">
+                <div *ngIf="!showOTP">
+                  <div class="row">
+                    <div class="form-group col-md-6">
+                      <input type="text" #f_name="ngModel" class="form-control" id="f_name" required [(ngModel)]= "affiliateModel.f_name" placeholder="First Name*" name="f_name" autocomplete="off">
+                      <div *ngIf="f_name.invalid && (f_name.dirty || f_name.touched)">
+                        <small class="text-danger" *ngIf="f_name.errors?.['required']"> First name is required </small>
+                      </div>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                      <input type="text" #l_name="ngModel" class="form-control" id="l_name" required [(ngModel)]= "affiliateModel.l_name" placeholder="Last Name*" name="l_name" autocomplete="off">
+                      <div *ngIf="l_name.invalid && (l_name.dirty || l_name.touched)">
+                        <small class="text-danger" *ngIf="l_name.errors?.['required']"> Last name is required </small>
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="row">
+                    <div class="form-group col-md-6">
+                      <ng-select #gender="ngModel" required [(ngModel)]= "affiliateModel.gender" name="gender" placeholder="Gender*">
+                        <ng-option *ngFor="let gender of genders" [value]="gender.value">{{gender.name}}</ng-option>
+                      </ng-select>
+                      <div *ngIf="gender.invalid && (gender.dirty || gender.touched)">
+                        <small class="text-danger" *ngIf="gender.errors?.['required']">Gender is required </small>
+                      </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                      <input type="text" #email="ngModel" class="form-control input-field" id="email"  pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}" required [(ngModel)]= "affiliateModel.email" placeholder="Email Address*" name="email" autocomplete="off">
+
+                      <div *ngIf="email.invalid && (email.dirty || email.touched)">
+                        <small class="text-danger" *ngIf="email.errors?.['required']"> Email address is required </small>
+                        <small class="text-danger" *ngIf="email.errors?.['pattern']"> Invalid Email address </small>
+                      </div>
+                      <span *ngIf="serverErr.email" class="text-danger">{{
+                        serverErr.email
+                      }}</span>
+                    </div>
+                  </div>
+                  <div class="row">
+                  <div class="form-group col-md-6">
+                      <input type="password" #password="ngModel" class="form-control" id="password" required [(ngModel)]= "affiliateModel.password" placeholder="Password*" name="password" minlength="6" maxlength="20" autocomplete="off" (keyup) = "passwordValid($event)">
+                      <app-strength-checker
+                        barLabel="Strength: "
+                        [passwordToVerify]="affiliateModel.password"
+                        *ngIf="showStrength"
+                      ></app-strength-checker>
+                      <div *ngIf="password.invalid && (password.dirty || password.touched)">
+                        <small class="text-danger" *ngIf="password.errors?.['required']"> Password is required </small>
+                        <small class="text-danger" *ngIf="password.errors?.['minlength']"> Password must be at least 6 characters </small>
+                        <small class="text-danger" *ngIf="password.errors?.['maxlength']"> Password must not exceed 20 characters </small>
+                      </div>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                      <input type="password" #confPassword="ngModel" class="form-control" id="confPassword" required [(ngModel)]= "affiliateModel.confPassword" placeholder="Confirm Password*" name="confPassword" minlength="6" maxlength="20" autocomplete="off" (keyup) ="comparePassword()">
+                      <div *ngIf="((confPassword.invalid || !passWordMatched) && (confPassword.dirty || confPassword.touched))">
+                        <small class="text-danger" *ngIf="confPassword.errors?.['required']"> Confirm Password is required </small>
+                        <small class="text-danger" *ngIf="!passWordMatched"> Confirm Password is not matched with actual password </small>
+                        
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="form-group col-md-4">
+                      <ng-select #country="ngModel" required [(ngModel)]= "affiliateModel.country" name="country" (ngModelChange)="modelChanged($event)" placeholder="Country*">
+                        <ng-option *ngFor="let country of countries" [value]="country.name">{{country.name}}</ng-option>
+                      </ng-select>
+                      <div *ngIf="country.invalid && (country.dirty || country.touched)">
+                        <small class="text-danger" *ngIf="country.errors?.['required']">Country is required </small>
+                      </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                      <input type="text" #state="ngModel" class="form-control" id="state" [(ngModel)]= "affiliateModel.state" placeholder="State" name="state">
+                    </div>
+                    <div class="form-group col-md-4">
+                      <input type="text" #city="ngModel" class="form-control" id="city" [(ngModel)]= "affiliateModel.city" placeholder="City" name="city">
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="form-group col-md-4">
+                      <input type="text" #address="ngModel" class="form-control" id="address" required [(ngModel)]= "affiliateModel.address" placeholder="Address*" name="address">
+                      <div *ngIf="address.invalid && (address.dirty || address.touched)">
+                        <small class="text-danger" *ngIf="address.errors?.['required']"> Address is required </small>
+                      </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                      <input type="text" #street="ngModel" class="form-control" id="street" required [(ngModel)]= "affiliateModel.street" placeholder="Street" name="street">
+                      <!-- <div *ngIf="street.invalid && (street.dirty || street.touched)">
+                        <small class="text-danger" *ngIf="street.errors?.['required']"> Street is required </small>
+                      </div> -->
+                    </div>
+                    <div class="form-group col-md-4">
+                      <input type="text" #zip="ngModel" class="form-control" id="zip" required [(ngModel)]= "affiliateModel.zip" placeholder="Zip*" name="zip" pattern="[0-9]{6}">
+                      <div *ngIf="zip.invalid && (zip.dirty || zip.touched)">
+                        <small class="text-danger" *ngIf="zip.errors?.['required']"> Zip is required </small>
+                        <small class="text-danger" *ngIf="zip.errors?.['pattern']"> Zip must be 6 digit number </small>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="form-group col-md-4">
+                      <input type="text" #mobile_countrycode="ngModel" class="form-control" id="mobile_countrycode" required [(ngModel)]= "affiliateModel.mobile_countrycode" placeholder="Country code*" name="mobile_countrycode" [readonly]="countryCodeReadOnly ? true : false">
+                      <div *ngIf="mobile_countrycode.invalid && (mobile_countrycode.dirty || mobile_countrycode.touched)">
+                        <small class="text-danger" *ngIf="mobile_countrycode.errors?.['required']"> Country code is required </small>
+                      </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                      <input type="text" #mobile_dialCode="ngModel" class="form-control" id="mobile_dialCode" required [(ngModel)]= "affiliateModel.mobile_dialCode" placeholder="Dial Code*" name="mobile_dialCode">
+                      <div *ngIf="mobile_dialCode.invalid && (mobile_dialCode.dirty || mobile_dialCode.touched)">
+                        <small class="text-danger" *ngIf="mobile_dialCode.errors?.['required']"> Dial code is required </small>
+                      </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                      <input type="text" #mobile="ngModel" class="form-control" id="mobile" required [(ngModel)]= "affiliateModel.mobile" placeholder="Mobile Number*" name="mobile" pattern="[0-9]{10}">
+                      <div *ngIf="mobile.invalid && (mobile.dirty || mobile.touched)">
+                        <small class="text-danger" *ngIf="mobile.errors?.['required']"> Mobile number code is required </small>
+                        <small class="text-danger" *ngIf="mobile.errors?.['pattern']"> Mobile number must be 10 digits number </small>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="form-group col-md-4">
+                      <input type="text" #phone_countrycode="ngModel" class="form-control" id="phone_countrycode" [(ngModel)]= "affiliateModel.phone_countrycode" placeholder="Country code" name="phone_countrycode" [readonly]="countryCodeReadOnly ? true : false">
+                      <div *ngIf="phone_countrycode.invalid && (phone_countrycode.dirty || phone_countrycode.touched)">
+                        <small class="text-danger" *ngIf="phone_countrycode.errors?.['required']"> Country code is required </small>
+                      </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                      <input type="text" #phone_dialCode="ngModel" class="form-control" id="phone_dialCode" [(ngModel)]= "affiliateModel.phone_dialCode" placeholder="Dial code" name="phone_dialCode">
+                      <div *ngIf="phone_dialCode.invalid && (phone_dialCode.dirty || phone_dialCode.touched)">
+                        <small class="text-danger" *ngIf="phone_dialCode.errors?.['required']"> Dail code is required </small>
+                      </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                      <input type="text" #phone="ngModel" class="form-control" id="phone" [(ngModel)]= "affiliateModel.phone" placeholder="Phone Number" name="phone">
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="form-group col-md-4">
+                      <ng-select #accountType="ngModel" required [(ngModel)]= "affiliateModel.accountType" name="accountType" placeholder="Account Type*">
+                        <ng-option *ngFor="let accountType of accountTypes" [value]="accountType.name">{{accountType.value}}</ng-option>
+                      </ng-select>
+                      <div *ngIf="accountType.invalid && (accountType.dirty || accountType.touched)">
+                        <small class="text-danger" *ngIf="accountType.errors?.['required']">Account Type is required </small>
+                      </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                      <input type="text" #routingNumber="ngModel" class="form-control" id="routingNumber" required [(ngModel)]= "affiliateModel.routingNumber" placeholder="Routing Number*" name="routingNumber" maxlength="9">
+                      <div *ngIf="routingNumber.invalid && (routingNumber.dirty || routingNumber.touched)">
+                        <small class="text-danger" *ngIf="routingNumber.errors?.['required']"> Routing Number is required </small>
+                        <small class="text-danger" *ngIf="routingNumber.errors?.['maxlength']"> Routing Number should not exceed 9 characters </small>
+                      </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                      <input type="text" #accountNumber="ngModel" class="form-control" id="accountNumber" required [(ngModel)]= "affiliateModel.accountNumber" placeholder="Account Number*" name="accountNumber" maxlength="17">
+                      <div *ngIf="accountNumber.invalid && (accountNumber.dirty || accountNumber.touched)">
+                        <small class="text-danger" *ngIf="accountNumber.errors?.['pattern']"> Account Number is required </small>
+                        <small class="text-danger" *ngIf="accountNumber.errors?.['maxlength']"> Account Number should not exceed 17 characters </small>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="form-group col-md-3">
+                      <input type="text" #nameOnAccount="ngModel" class="form-control" id="nameOnAccount" required [(ngModel)]= "affiliateModel.nameOnAccount" placeholder="Name on Account*" name="nameOnAccount" maxlength="22">
+                      <div *ngIf="nameOnAccount.invalid && (nameOnAccount.dirty || nameOnAccount.touched)">
+                        <small class="text-danger" *ngIf="nameOnAccount.errors?.['pattern']"> Name on account is required </small>
+                        <small class="text-danger" *ngIf="nameOnAccount.errors?.['maxlength']"> Name on account should not exceed 22 characters </small>
+                      </div>
+                    </div>
+                    <div class="form-group col-md-3">
+                      <input type="text" #bankName="ngModel" class="form-control" id="bankName" required [(ngModel)]= "affiliateModel.bankName" placeholder="Bank Name*" name="bankName">
+                      <div *ngIf="bankName.invalid && (bankName.dirty || bankName.touched)">
+                        <small class="text-danger" *ngIf="bankName.errors?.['pattern']"> Bank Name is required </small>
+                      </div>
+                    </div>
+                    <div class="form-group col-md-3">
+
+                      <ng-select #echeckType="ngModel" required [(ngModel)]= "affiliateModel.echeckType" name="echeckType" placeholder="e-Check Type*">
+                        <ng-option *ngFor="let eCheckType of eCheckTypes" [value]="eCheckType.name">{{eCheckType.value}}</ng-option>
+                      </ng-select>
+                      <div *ngIf="echeckType.invalid && (echeckType.dirty || echeckType.touched)">
+                        <small class="text-danger" *ngIf="echeckType.errors?.['required']">e-Check Type is required </small>
+                      </div>
+                    </div>
+                    <div class="form-group col-md-3">
+                      <input type="text" #checkNumber="ngModel" class="form-control" id="checkNumber" required [(ngModel)]= "affiliateModel.checkNumber" placeholder="Check Number*" name="checkNumber" maxlength="15">
+                      <div *ngIf="checkNumber.invalid && (checkNumber.dirty || checkNumber.touched)">
+                        <small class="text-danger" *ngIf="checkNumber.errors?.['required']"> Check Number is required </small>
+                        <small class="text-danger" *ngIf="checkNumber.errors?.['maxlength']"> Check number not exceed 15 characters </small>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="form-group form-check col-md-4 center">
+                      <input type="checkbox" #acceptTerms="ngModel" class="form-check-input" id="acceptTerms" required [(ngModel)]= "affiliateModel.acceptTerms" name="acceptTerms">
+                     
+                      <label for="acceptTerms" class="form-check-label"
+                        >I have read and agree to the Terms</label
+                      >
+                      <div *ngIf="acceptTerms.invalid && (acceptTerms.dirty || acceptTerms.touched)">
+                        <small class="text-danger" *ngIf="acceptTerms.errors?.['required']"> Please accept terms </small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div *ngIf="showOTP">
+                  <div class="row">
+                    <div class="form-group col-md-6 center">
+                      <input type="text" #otp="ngModel" class="form-control" id="otp" required [(ngModel)]= "affiliateModel.otp" placeholder="OTP*" name="otp" value = "123456">
+                      <div *ngIf="otp.invalid && (otp.dirty || otp.touched)">
+                        <small class="text-danger" *ngIf="otp.errors?.['required']"> OTP is required </small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+          
+                <div class="form-group">
+                  <button type="submit" class="btn btn-primary" style="margin-right: 5px;" *ngIf="!showOTP" [disabled]="signupForm.form.invalid || !passWordMatched">Register</button>
+                  <button type="submit" class="btn btn-primary" style="margin-right: 5px;" *ngIf="showOTP" [disabled]="signupForm.form.invalid">Validate</button>
+                  <button
+                    type="button"
+                    (click)="onReset()"
+                    class="btn btn-warning float-right"
+                    *ngIf="!showOTP"
+                  >
+                    Reset
+                  </button>
+                </div>
+              </form>
+            </div>
+          
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
