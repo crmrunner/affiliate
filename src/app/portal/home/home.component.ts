@@ -11,10 +11,12 @@ import * as con from '../../services/app.config';
 })
 export class HomeComponent implements OnInit {
   dashBoardDeatils: any;
+  subscribedData: any;
   crmRunnerFrontEndURL = con.crmForntEndUrl;
   showCopyBtn : boolean = true;
   constructor(private router: Router, private dashboardService : DashboardService, private clipboardApi: ClipboardService) {
     this.dashBoardDeatils = {};
+    this.subscribedData = [];
     let token = this.gettoken();
     this.getDashboardInfo();
     // if(!!token) {
@@ -32,6 +34,10 @@ export class HomeComponent implements OnInit {
       next: (res) => {
         if(!res.error) {
           this.dashBoardDeatils = res.data;
+          if(res.subscribedData) {
+            console.log('subscribedData: ', res.subscribedData);
+            this.subscribedData = res.subscribedData;
+          }
         }else {
           localStorage.removeItem("affiliateAuthToken");
           this.router.navigate(['/']);
@@ -46,7 +52,7 @@ export class HomeComponent implements OnInit {
       },
       error: (e) => {
         //this.validationErr = e.error.message;
-        console.log('dashboard error ', e.error.message);
+        //console.log('dashboard error ', e.error.message);
         localStorage.removeItem("affiliateAuthToken");
         this.router.navigate(['/']);
       }

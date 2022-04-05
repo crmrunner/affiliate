@@ -6,6 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DefaultLayoutComponent } from './layouts/default-layout/default-layout.component';
 import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { UserInterceptorProvider } from './interceptor/auth.interceptor';
 import { SharedModule } from './shared/shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -17,7 +18,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   declarations: [
     AppComponent,
     DefaultLayoutComponent,
-    AuthLayoutComponent
+    AuthLayoutComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,

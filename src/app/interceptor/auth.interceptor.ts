@@ -1,9 +1,12 @@
-import { Injectable, Injector } from '@angular/core';
+import { Injectable } from '@angular/core';
 import {HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpHeaders, HTTP_INTERCEPTORS} from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { AuthService } from '../services/auth/auth.service';
+import { Router } from '@angular/router';
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  constructor() {}
+  constructor(private authenticationService: AuthService, private router: Router) {}
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if(localStorage.getItem('affiliateAuthToken') != null) 
     {
@@ -17,6 +20,16 @@ export class AuthInterceptor implements HttpInterceptor {
       });
       console.log('loooo AuthRequest: ', AuthRequest);
       return next.handle(AuthRequest)
+      .pipe(catchError(err => {
+        if ([401, 403].includes(err.status)) {
+          localStorage.removeItem("affiliateAuthToken");
+          this.router.navigate(['/']);
+        }
+
+        const error = (err && err.error && err.error.message) || err.statusText;
+        console.error('interceptErr: ',err);
+        return throwError(() => new Error(error)); //throwError(error);
+    }))
     }else {
       return next.handle(request);
     }
