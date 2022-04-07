@@ -27,7 +27,17 @@ jobs:
     - run: npm install -g @angular/cli > /dev/null
     - run: ng build --prod
     
-    - name: Delete Existing Files
-      run : sudo sshpass1 -p ${{ secrets.PASSWORD }} -v ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} 'rm -rf rm -rf /home/ayan/contractors.crmrunner.com/*'
+    #- name: Delete Existing Files
+    #  run : sudo sshpass1 -p ${{ secrets.PASSWORD }} -v ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} 'rm -rf rm -rf /home/ayan/contractors.crmrunner.com/*'
+    
+    - name: copy file via ssh password
+      uses: ./
+      with:
+        host: crmrunner.com
+        username: ayan
+        password: ${{ secrets.PASSWORD }}
+        port: 22
+        source: "tsconfig.spec.json"
+        target: "/home/ayan/contractors.crmrunner.com/"
 
    
