@@ -28,13 +28,16 @@ jobs:
     - run: ng build --prod
 
     - name: copy file via ssh key
-      uses: appleboy/scp-action@main
+      uses: ./
       env:
         HOST: 198.61.147.136
         USERNAME: ayan
         PORT: 22
         KEY: ${{ secrets.RACKSPACEAFFILIATE }}
       with:
+        host: 198.61.147.136
+        username: ayan
+        password: ${{ secrets.PASSWORD }}
         source: "./dist/affiliate/"
         target: "/home/ayan/contractors.crmrunner.com/"
         strip_components: 3 # this is important
