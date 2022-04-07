@@ -30,3 +30,4 @@ import { ResetPasswordComponent } from './auth/reset-password/reset-password.com
   ]
 })
 export class AuthModule { }
+
