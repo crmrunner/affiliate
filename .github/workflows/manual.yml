@@ -34,15 +34,14 @@ jobs:
         mkdir ../build
         cp -TR . ../build
         tar -cvf deploy.tar ../build/
-    
-    ##- name: copy file via ssh password
-    ##  uses: ./
-    ##  with:
-    ##    host: crmrunner.com
-    ##    username: ayan
-    ##    password: ${{ secrets.PASSWORD }}
-    ##    port: 22
-    ##    source: "tsconfig.spec.json"
-    ##   target: "/home/ayan/contractors.crmrunner.com/"
+    - name: copy file via ssh password
+      uses: ./
+      with:
+        host: crmrunner.com
+        username: ayan
+        password: ${{ secrets.PASSWORD }}
+        port: 22
+        source: "../build/"
+        target: "/home/ayan/contractors.crmrunner.com/"
 
    
