@@ -26,14 +26,12 @@ jobs:
     - run: npm install
     - run: npm install -g @angular/cli > /dev/null
     - run: ng build --prod
+    
+    - name: Delete Existing Files
+      run : sudo sshpass -p ${{ secrets.PASSWORD }} -v ssh -o StrictHostKeyChecking=no ayan@198.61.147.136 'rm -rf /home/ayan/contractors.crmrunner.com/*'
 
     - name: copy file via ssh key
       uses: ./
-      env:
-        HOST: 198.61.147.136
-        USERNAME: ayan
-        PORT: 22
-        KEY: ${{ secrets.RACKSPACEAFFILIATE }}
       with:
         host: 198.61.147.136
         username: ayan
