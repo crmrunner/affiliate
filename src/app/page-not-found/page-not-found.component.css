@@ -4,26 +4,6 @@
 /***********************************
 			/* 1. BODY */
 /***********************************/
-
-* {
-  margin: 0;
-  padding: 0;
-  -webkit-text-size-adjust: none;
-}
-
-html, body {
-  height: 100%;
-  overflow: hidden;
-}
-
-body {
-  padding: 0;
-  margin: 0;
-  background: #181828;
-  font-size: 14px;
-  line-height: 1;
-}
-
 label {
   cursor: pointer;
 }
@@ -42,7 +22,7 @@ input, select, button, textarea {
   font-size: 100%;
 }
 
-html, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp,
 small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li,
 fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, input {
@@ -482,9 +462,6 @@ button {
   }
 }
 @media (max-width: 750px) {
-  body, html, {
-    max-height: 100vh;
-  }
    .error__content {
     position: static;
     margin: 0 auto;
@@ -496,7 +473,7 @@ button {
     padding-bottom: 100px;
     height: 100vh;
   }
-  }
+}
 @media (max-width: 650px) {
   .message__title {
     font-size: 36px;
