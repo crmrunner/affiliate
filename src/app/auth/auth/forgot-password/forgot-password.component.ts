@@ -15,7 +15,7 @@ export class ForgotPasswordComponent implements OnInit {
   userModel: any;
   successMsg: string = '';
   constructor(public activeModal: NgbActiveModal,  private authService: AuthService) { 
-    this.userModel = new UserModel('','','');
+    this.userModel = new UserModel('','','','');
   }
 
   ngOnInit(): void {

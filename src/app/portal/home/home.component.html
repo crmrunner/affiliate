@@ -2,44 +2,35 @@
     <div class="col-lg-8">
       <div class="row">
         <div class="col-xl-12 mb-xl-0 mb-4">
-          <div class="card bg-transparent shadow-xl">
+          <div class="card bg-transparent shadow-xl" style="border: none;">
             <div class="overflow-hidden position-relative border-radius-xl">
               <img src="../assets/img/illustrations/pattern-tree.svg" class="position-absolute opacity-2 start-0 top-0 w-100 z-index-1 h-100" alt="pattern-tree">
-              <span class="mask bg-gradient-dark opacity-10 pb-2"><p style="color: white;">Bank inormation</p></span>
+              <span class="mask bg-gradient-dark opacity-10 pb-2" style="padding-left: 15px;"><p style="color: white;">Bank inormation</p></span>
               <div class="card-body position-relative z-index-1 p-3">
                 <div class="d-flex">
                   <div class="d-flex">
                     <div class="">
                       <h4 class="text-white mt-3 mb-1">Account number</h4>
-                      <h5 class="text-white" *ngIf="dashBoardDeatils.bank_account_info && dashBoardDeatils.bank_account_info.accountNumber">{{dashBoardDeatils.bank_account_info.accountNumber}}</h5>
+                      <h5 class="text-white" *ngIf="dashBoardDetails.bank_account_info && dashBoardDetails.bank_account_info.accountNumber">{{dashBoardDetails.bank_account_info.accountNumber}}</h5>
                     </div>
                   </div>
   
                   <div class="d-flex col-md-5 ms-auto">
                     <div class="">
                       <h4 class="text-white mt-3 mb-1">Account Type</h4>
-                      <h5 class="text-white" *ngIf="dashBoardDeatils.bank_account_info && dashBoardDeatils.bank_account_info.accountType">{{dashBoardDeatils.bank_account_info.accountType}}</h5>
+                      <h5 class="text-white" *ngIf="dashBoardDetails.bank_account_info && dashBoardDetails.bank_account_info.accountType">{{dashBoardDetails.bank_account_info.accountType}}</h5>
                     </div>
                   </div>
-
-                  <!-- <div class="d-flex col-md-4 ms-auto">
-                    <div class="">
-                      <h4 class="text-white mt-3 mb-1">Bank Name</h4>
-                      <h5 class="text-white" *ngIf="dashBoardDeatils.bank_account_info">{{dashBoardDeatils.bank_account_info.bankName}}</h5>
-                    </div>
-                  </div> -->
                 </div>
-                
-                
                 <div class="d-flex">
                   <div class="d-flex">
                     <div class="me-4">
                       <p class="text-white text-sm opacity-8 mb-0">Account Holder Name</p>
-                      <h6 class="text-white mb-0" *ngIf="dashBoardDeatils.bank_account_info && dashBoardDeatils.bank_account_info.nameOnAccount">{{dashBoardDeatils.bank_account_info.nameOnAccount}}</h6>
+                      <h6 class="text-white mb-0" *ngIf="dashBoardDetails.bank_account_info && dashBoardDetails.bank_account_info.nameOnAccount">{{dashBoardDetails.bank_account_info.nameOnAccount}}</h6>
                     </div>
                     <div>
                       <p class="text-white text-sm opacity-8 mb-0">Routing Number</p>
-                      <h6 class="text-white mb-0" *ngIf="dashBoardDeatils.bank_account_info && dashBoardDeatils.bank_account_info.routingNumber">{{dashBoardDeatils.bank_account_info.routingNumber}}</h6>
+                      <h6 class="text-white mb-0" *ngIf="dashBoardDetails.bank_account_info && dashBoardDetails.bank_account_info.routingNumber">{{dashBoardDetails.bank_account_info.routingNumber}}</h6>
                     </div>
                   </div>
                   <div class="ms-auto w-20 d-flex align-items-end justify-content-end">
@@ -50,49 +41,61 @@
             </div>
           </div>
         </div>
-        <!-- <div class="col-xl-6">
+        <div class="col-xl-12 mb-xl-0 mb-4">
           <div class="row">
-            <div class="col-md-6 col-6">
+            <div class="col-md-4 col-sm-4 col-4">
               <div class="card">
                 <div class="card-header mx-4 p-3 text-center">
                   <div class="icon icon-shape icon-lg bg-gradient-primary shadow text-center border-radius-lg">
-                    <i class="material-icons opacity-10">account_balance</i>
+                    <i class="material-icons opacity-10">group</i>
                   </div>
                 </div>
                 <div class="card-body pt-0 p-3 text-center">
-                  <h6 class="text-center mb-0">Salary</h6>
-                  <span class="text-xs">Belong Interactive</span>
+                  <h6 class="text-center mb-0">Total Subscribers</h6>
+                  <span class="text-xs">As on current date</span>
                   <hr class="horizontal dark my-3">
-                  <h5 class="mb-0">+$2000</h5>
+                  <h5 class="mb-0">{{totalSubscriber}}</h5>
                 </div>
               </div>
             </div>
-            <div class="col-md-6 col-6">
+            <div class="col-md-4 col-sm-4 col-4">
               <div class="card">
                 <div class="card-header mx-4 p-3 text-center">
                   <div class="icon icon-shape icon-lg bg-gradient-primary shadow text-center border-radius-lg">
-                    <i class="material-icons opacity-10">account_balance_wallet</i>
+                    <i class="material-icons opacity-10">local_atm</i>
                   </div>
                 </div>
                 <div class="card-body pt-0 p-3 text-center">
-                  <h6 class="text-center mb-0">Paypal</h6>
-                  <span class="text-xs">Freelance Payment</span>
+                  <h6 class="text-center mb-0">Total Subscriptions</h6>
+                  <span class="text-xs">Users Paid</span>
                   <hr class="horizontal dark my-3">
-                  <h5 class="mb-0">$455.00</h5>
+                  <h5 class="mb-0">${{totalCustomerPayment | number : '1.2-2'}}</h5>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-4 col-4">
+              <div class="card">
+                <div class="card-header mx-4 p-3 text-center">
+                  <div class="icon icon-shape icon-lg bg-gradient-primary shadow text-center border-radius-lg">
+                    <i class="material-icons opacity-10">monetization_on</i>
+                  </div>
+                </div>
+                <div class="card-body pt-0 p-3 text-center">
+                  <h6 class="text-center mb-0">Your Achievement</h6>
+                  <span class="text-xs">You Earned</span>
+                  <hr class="horizontal dark my-3">
+                  <h5 class="mb-0">${{totalCommission | number : '1.2-2'}}</h5>
                 </div>
               </div>
             </div>
           </div>
-        </div> -->
+        </div>
         <!-- <div class="col-md-12 mb-lg-0 mb-4">
           <div class="card mt-4">
             <div class="card-header pb-0 p-3">
               <div class="row">
                 <div class="col-6 d-flex align-items-center">
                   <h6 class="mb-0">Payment Method</h6>
-                </div>
-                <div class="col-6 text-end">
-                  <a class="btn bg-gradient-dark mb-0" href="javascript:;"><i class="material-icons text-sm">add</i>&nbsp;&nbsp;Add New Card</a>
                 </div>
               </div>
             </div>
@@ -116,6 +119,10 @@
             </div>
           </div>
         </div> -->
+
+
+
+
       </div>
     </div>
     <div class="col-lg-4">
@@ -135,7 +142,7 @@
           <ul class="list-group">
             <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
               <div class="flex-column">
-                <span class="text-xs">{{crmRunnerFrontEndURL}}{{dashBoardDeatils.referal_code}}</span>
+                <span class="text-xs">{{crmRunnerFrontEndURL}}{{dashBoardDetails.referal_code}}</span>
                 <i class="material-icons" style="padding-left: 15px; cursor: pointer;" (click)="copyCode()" *ngIf = "showCopyBtn">content_copy</i>
                 <i class="material-icons" style="padding-left: 15px; cursor: pointer;" (click)="copyCode()" *ngIf = "!showCopyBtn">done_ally</i>
               </div>
@@ -196,20 +203,24 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-md-7 mt-4">
+    <div class="col-md-6 mt-4">
       <div class="card">
         <div class="card-header pb-0 px-3">
           <h6 class="mb-0">Subscribers Information</h6>
         </div>
-        <div class="card-body pt-4 p-3">
-          <ul class="list-group">
+        <div class="card-body pt-4 p-3 search-results-container">
+          <ul class="list-group" infinite-scroll [infiniteScrollDistance]="scrollDistance"    
+          [infiniteScrollUpDistance]="scrollUpDistance"    
+          [infiniteScrollThrottle]="throttle"    
+          (scrolled)="onScrollDown()">
             <ng-container *ngIf="subscribedData.length > 0; else newDeb">
-              <li class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg" *ngFor="let user of subscribedData">
+              <li class="list-group-item list-group-item-action border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg" *ngFor="let user of subscribedData">
                 <div class="d-flex flex-column">
-                  <h6 class="mb-3 text-sm">{{user.userFullname}}</h6>
+                  <h6 class="mb-3 text-sm">{{user.customer_first_name}} {{user.customer_last_name}}</h6>
                   <!-- <span class="mb-2 text-xs">Company Name: <span class="text-dark font-weight-bold ms-sm-2">Viking Burrito</span></span> -->
-                  <span class="mb-2 text-xs">Email Address: <span class="text-dark ms-sm-2 font-weight-bold">{{user.email}}</span></span>
-                  <span class="text-xs" *ngIf="user.subcription_id">Subscription No: <span class="text-dark ms-sm-2 font-weight-bold">{{user.subcription_id}}</span></span>
+                  <span class="mb-2 text-xs">Email Address: <span class="text-dark ms-sm-2 font-weight-bold">{{user.customer_email}}</span></span>
+                  <span class="mb-2 text-xs">Mobile Number: <span class="text-dark ms-sm-2 font-weight-bold">(+{{user.customer_mobile.mobile_dialCode}}) {{user.customer_mobile.mobile}}</span></span>
+                  <span class="text-xs" *ngIf="user.subscription_date">Subscription Date: <span class="text-dark ms-sm-2 font-weight-bold">{{user.subscription_date | date:'medium' }}</span></span>
                 </div>
                 <!-- <div class="ms-auto text-end">
                   <a class="btn btn-link text-danger text-gradient px-3 mb-0" href="javascript:;"><i class="material-icons text-sm me-2">delete</i>Delete</a>
@@ -228,42 +239,54 @@
         </div>
       </div>
     </div>
-    <div class="col-md-5 mt-4">
-      <div class="card h-100 mb-4">
+    <div class="col-md-6 mt-4">
+      <div class="card">
         <div class="card-header pb-0 px-3">
           <div class="row">
             <div class="col-md-6">
               <h6 class="mb-0">Your Transaction's</h6>
             </div>
-            <div class="col-md-6 d-flex justify-content-start justify-content-md-end align-items-center">
+            <!-- <div class="col-md-6 d-flex justify-content-start justify-content-md-end align-items-center">
               <i class="material-icons me-2 text-lg">date_range</i>
               <small>23 - 30 March 2020</small>
-            </div>
+            </div> -->
           </div>
         </div>
-        <div class="card-body pt-4 p-3">
+        <div class="card-body pt-4 p-3 search-results-container">
           <!-- <h6 class="text-uppercase text-body text-xs font-weight-bolder mb-3">Newest</h6> -->
-          <ul class="list-group">
-            <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
-              <div class="d-flex align-items-center">
-                <div class="d-flex flex-column">
-                  <p class="mb-1 text-dark text-sm">No record found</p>
+          <ul class="list-group" infinite-scroll [infiniteScrollDistance]="scrollDistance"    
+          [infiniteScrollUpDistance]="scrollUpDistance"    
+          [infiniteScrollThrottle]="throttle"    
+          (scrolled)="onScrollDown()">
+            <!--  -->
+            <ng-container *ngIf="subscribedData.length > 0; else mySubscription">
+              <li class="list-group-item list-group-item-action border-0 d-flex bg-gray-100 justify-content-between ps-0 mb-2 border-radius-lg" *ngFor="let user of subscribedData">
+                <div class="d-flex align-items-center">
+                  <button class="btn btn-icon-only btn-rounded btn-outline-danger mb-0 me-3 p-3 btn-sm d-flex align-items-center justify-content-center"><i class="material-icons text-lg" *ngIf="user.payment_status == 'Paid'">expand_more</i><i class="material-icons text-lg" *ngIf="user.payment_status == 'Pending'">priority_high</i></button>
+                  <div class="d-flex flex-column">
+                    <h6 class="mb-1 text-dark text-sm">{{user.customer_first_name}} {{user.customer_last_name}}</h6>
+                    <!-- <span class="text-xs">27 March 2020, at 12:30 PM</span> -->
+                    <span class="text-xs">{{user.subscription_date | date:'medium' }}</span>
+                    <span class="text-xs">{{user.payment_status}}</span>
+                  </div>
                 </div>
-              </div>
-            </li>
+                <div class="d-flex align-items-center text-danger text-gradient text-sm font-weight-bold">
+                   $ {{user.affiliate_commission | number : '1.2-2'}}
+                </div>
+              </li>
+            </ng-container>
+
+            <ng-template #mySubscription>
+              <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
+                <div class="d-flex align-items-center">
+                  <div class="d-flex flex-column">
+                    <p class="mb-1 text-dark text-sm">No record found</p>
+                  </div>
+                </div>
+              </li>
+            </ng-template>
+            
             <!-- <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
-              <div class="d-flex align-items-center">
-                <button class="btn btn-icon-only btn-rounded btn-outline-danger mb-0 me-3 p-3 btn-sm d-flex align-items-center justify-content-center"><i class="material-icons text-lg">expand_more</i></button>
-                <div class="d-flex flex-column">
-                  <h6 class="mb-1 text-dark text-sm">Netflix</h6>
-                  <span class="text-xs">27 March 2020, at 12:30 PM</span>
-                </div>
-              </div>
-              <div class="d-flex align-items-center text-danger text-gradient text-sm font-weight-bold">
-                - $ 2,500
-              </div>
-            </li>
-            <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
               <div class="d-flex align-items-center">
                 <button class="btn btn-icon-only btn-rounded btn-outline-success mb-0 me-3 p-3 btn-sm d-flex align-items-center justify-content-center"><i class="material-icons text-lg">expand_less</i></button>
                 <div class="d-flex flex-column">

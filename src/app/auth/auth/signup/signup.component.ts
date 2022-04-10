@@ -26,14 +26,13 @@ export class SignupComponent implements OnInit {
   showOTP: boolean = false;
   serverErr: any = {};
   countries: any = [];
-  phoneCountrycode: string = '';
-  countryCodeReadOnly: boolean = false;
-  mobileCountrycode: string = '';
   phoneDialcode: string = '';
   mobileDialcode: string = '';
   passwordIsValid = false;
   showStrength= false;
   passWordMatched: boolean = true;
+  showMessage: string = '';
+  successMsg: string = '';
 
   f_name : string = '';
   l_name : string = '';
@@ -106,12 +105,19 @@ export class SignupComponent implements OnInit {
       next: (res) => {
         console.log('Login Res', res);
         //this.submitted = true;
+        this.showMessage = '';
         if(!!res.otpSent){
           this.showOTP = true;
+          this.showMessage = res.message ? res.message : '';
         }else {
+          this.showMessage = res.message ? res.message : '';
           if(res.success){
             this.showOTP = false;
+            this.successMsg = res.message ? res.message : '';
             this.affiliateModel = {};
+            setTimeout(() => {
+              this.router.navigate(['/']);
+            }, 3000);
           }else {
             if(this.affiliateModel.otp){
               this.showOTP = true;
@@ -157,7 +163,6 @@ export class SignupComponent implements OnInit {
   onReset(): void {
     this.submitted = false;
     this.serverErr = {};
-    //this.form.reset();
     this.affiliateModel = {};
   }
 
@@ -174,37 +179,6 @@ export class SignupComponent implements OnInit {
         console.log(e.error.message);        
       }
     })
-  }
-
-  modelChanged(newObj: any) {
-    console.log('onchage: ', newObj);
-      if(this.countries.length >0){
-        if(!newObj || newObj == null){
-          this.affiliateModel.phone_countrycode = '';
-          this.affiliateModel.mobile_countrycode = '';
-          //this.affiliateModel.phone_dialCode = '';
-          //this.affiliateModel.mobile_dialCode = '';
-          this.countryCodeReadOnly = false;
-        } else {
-          let selectedObj = this.countries.filter((data: any) => {
-            return data.name == newObj;
-          });
-          this.affiliateModel.phone_countrycode = '';
-          this.affiliateModel.mobile_countrycode = '';
-          //this.affiliateModel.phone_dialCode = '';
-          //this.affiliateModel.mobile_dialCode = '';
-          this.countryCodeReadOnly = false;
-          if(selectedObj && selectedObj[0].phonecode != '') {
-            this.affiliateModel.phone_countrycode = `+${selectedObj[0].phonecode}`;
-            this.countryCodeReadOnly = true;
-            this.affiliateModel.mobile_countrycode = `+${selectedObj[0].phonecode}`;
-            //this.affiliateModel.phone_dialCode = `+${selectedObj[0].numcode}`;
-            //this.affiliateModel.mobile_dialCode = `+${selectedObj[0].numcode}`;
-          }
-        }
-      }
-    
-    //console.log('selectedObj: ', selectedObj[0].phonecode);
   }
 
   passwordValid(event: any) {

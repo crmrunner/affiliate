@@ -8,9 +8,10 @@ import { AuthFooterComponent } from './auth-footer/auth-footer.component';
 import { DefaultHeaderComponent } from './default-header/default-header.component';
 import { DefaultFooterComponent } from './default-footer/default-footer.component';
 import { DefaultNavComponent } from './default-nav/default-nav.component';
+import { SiteButtonComponent } from './site-button/site-button/site-button.component';
 
 @NgModule({
-  declarations: [AuthHeaderComponent, AuthFooterComponent, DefaultHeaderComponent, DefaultFooterComponent, DefaultNavComponent],
+  declarations: [AuthHeaderComponent, AuthFooterComponent, DefaultHeaderComponent, DefaultFooterComponent, DefaultNavComponent, SiteButtonComponent],
   exports: [
     AuthHeaderComponent,
     AuthFooterComponent,

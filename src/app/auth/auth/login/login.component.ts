@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
     // if(!!token) {
     //   this.router.navigate(['/portal']);
     // }
-    this.userModel = new UserModel('','','');
+    this.userModel = new UserModel('','','','');
 
     this.modalOptions = {
       backdrop:'static',

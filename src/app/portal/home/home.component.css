@@ -6,3 +6,10 @@
     font-size: 1rem;
     line-height: 1.625;
 }
+
+.search-results-container{
+    margin: 40px;
+    height: 350px;
+    width: auto;
+    overflow: auto;
+}

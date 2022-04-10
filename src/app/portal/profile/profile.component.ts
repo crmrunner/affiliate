@@ -1,47 +1,53 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../../services/auth/auth.service';
-import { UserModel } from '../../../models/user/user';
-import { ActivatedRoute, Router } from '@angular/router';
+import { DashboardService } from '../../services/dashboard/dashboard.service';
+import { AuthService } from '../../services/auth/auth.service';
+import { UserModel } from '../../models/user/user';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
-  selector: 'app-reset-password',
-  templateUrl: './reset-password.component.html',
-  styleUrls: ['./reset-password.component.css']
+  selector: 'app-profile',
+  templateUrl: './profile.component.html',
+  styleUrls: ['./profile.component.css']
 })
-export class ResetPasswordComponent implements OnInit {
+export class ProfileComponent implements OnInit {
+  profileDetails: any;
   password: string = '';
   confPassword: string = '';
+  currentPassword: string = '';
   showSpinner: boolean = false;
   validationErr: string = '';
   userModel: any;
-  resetPassToken: any;
-  inValidResetToken: boolean = false;
   inactiveButton: boolean = false;
   serverErrorMsg: string = '';
   serverSuccessMsg: string = '';
 
-  constructor(private authService: AuthService, private route: ActivatedRoute, private router: Router ) {
+  constructor(private router: Router, private dashboardService : DashboardService, private authService: AuthService, private route: ActivatedRoute) {
     this.userModel = new UserModel('','','','');
-   }
+    this.profileDetails = {};
+  }
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe(params => {
-      this.resetPassToken = params.get('id');
-      if(!this.resetPassToken || this.resetPassToken == ''){
-        this.inactiveButton = true;
-        this.inValidResetToken = true;
-        this.serverErrorMsg = 'User is not found!!';
+    this.getProfileInfo();
+  }
+
+  getProfileInfo() {  
+    this.dashboardService.getDashboardInfo().subscribe({
+      next: (res) => {
+        if(!res.error) {
+          console.log('profile: ', res.data);
+          this.profileDetails = res.data;
+        }
+      },
+      error: (e) => {
+        console.log(e);
       }
-      console.log();
-    });
+    })
   }
 
   resetPassword(){
-    console.log("DataComes ::",this.userModel, this.inValidResetToken);
-      if(!this.inValidResetToken) {
-        let param: any = {'new_pwd': this.userModel.password, 'conf_new_pwd': this.userModel.confPassword};
+      let param: any = {'current_password': this.userModel.currentPassword, 'new_pwd': this.userModel.password, 'conf_new_pwd': this.userModel.confPassword};
       console.log('param: ', param);
-      this.authService.resetPassword(param, this.resetPassToken).subscribe({
+      this.authService.changePassword(param).subscribe({
         next: (res) => {
           console.log('Login Res', res);
           //this.submitted = true;
@@ -49,7 +55,8 @@ export class ResetPasswordComponent implements OnInit {
             this.serverSuccessMsg = res.message;
             this.serverErrorMsg = '';
             setTimeout(()=> {
-              this.router.navigate(['']);
+              this.serverSuccessMsg = '';
+              this.userModel = {};
             }, 3000)
           }else {
             this.serverErrorMsg = res.message;
@@ -59,10 +66,7 @@ export class ResetPasswordComponent implements OnInit {
           this.serverErrorMsg = e.error.message;
           console.log(e.error.message);
         }
-      })
-    }else {
-      this.inactiveButton = true;
-    }
+      });
   }
 
   matchPassword() {

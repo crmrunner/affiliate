@@ -14,4 +14,9 @@ export class DashboardService {
     const apiBaseUrl = con.baseUrl+'dashboard';
     return this.http.post(apiBaseUrl, {});
   }
+
+  getSubscriberInfo(data: any): Observable<any> {
+    const apiBaseUrl = con.baseUrl+'dashboard';
+    return this.http.post(apiBaseUrl, data);
+  }
 }

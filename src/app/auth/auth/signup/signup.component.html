@@ -10,7 +10,7 @@
         <div class="">
           <div class="login-box" id="card" style="text-align: center;">          
            
-            <div class="register-form">
+            <div class="register-form" *ngIf="successMsg==''; else showRegSuccess">
               <form #signupForm="ngForm" (ngSubmit)="onSubmit()">
                 <div *ngIf="!showOTP">
                   <div class="row">
@@ -76,7 +76,7 @@
                   </div>
                   <div class="row">
                     <div class="form-group col-md-4">
-                      <ng-select #country="ngModel" required [(ngModel)]= "affiliateModel.country" name="country" (ngModelChange)="modelChanged($event)" placeholder="Country*">
+                      <ng-select #country="ngModel" required [(ngModel)]= "affiliateModel.country" name="country" placeholder="Country*">
                         <ng-option *ngFor="let country of countries" [value]="country.name">{{country.name}}</ng-option>
                       </ng-select>
                       <div *ngIf="country.invalid && (country.dirty || country.touched)">
@@ -113,19 +113,19 @@
                   </div>
 
                   <div class="row">
-                    <div class="form-group col-md-4">
+                    <!--<div class="form-group col-md-4">
                       <input type="text" #mobile_countrycode="ngModel" class="form-control" id="mobile_countrycode" required [(ngModel)]= "affiliateModel.mobile_countrycode" placeholder="Country code*" name="mobile_countrycode" [readonly]="countryCodeReadOnly ? true : false">
                       <div *ngIf="mobile_countrycode.invalid && (mobile_countrycode.dirty || mobile_countrycode.touched)">
                         <small class="text-danger" *ngIf="mobile_countrycode.errors?.['required']"> Country code is required </small>
                       </div>
-                    </div>
-                    <div class="form-group col-md-4">
+                    </div> -->
+                    <div class="form-group col-md-6">
                       <input type="text" #mobile_dialCode="ngModel" class="form-control" id="mobile_dialCode" required [(ngModel)]= "affiliateModel.mobile_dialCode" placeholder="Dial Code*" name="mobile_dialCode">
                       <div *ngIf="mobile_dialCode.invalid && (mobile_dialCode.dirty || mobile_dialCode.touched)">
                         <small class="text-danger" *ngIf="mobile_dialCode.errors?.['required']"> Dial code is required </small>
                       </div>
                     </div>
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-6">
                       <input type="text" #mobile="ngModel" class="form-control" id="mobile" required [(ngModel)]= "affiliateModel.mobile" placeholder="Mobile Number*" name="mobile" pattern="[0-9]{10}">
                       <div *ngIf="mobile.invalid && (mobile.dirty || mobile.touched)">
                         <small class="text-danger" *ngIf="mobile.errors?.['required']"> Mobile number code is required </small>
@@ -134,19 +134,19 @@
                     </div>
                   </div>
                   <div class="row">
-                    <div class="form-group col-md-4">
+                    <!-- <div class="form-group col-md-4">
                       <input type="text" #phone_countrycode="ngModel" class="form-control" id="phone_countrycode" [(ngModel)]= "affiliateModel.phone_countrycode" placeholder="Country code" name="phone_countrycode" [readonly]="countryCodeReadOnly ? true : false">
                       <div *ngIf="phone_countrycode.invalid && (phone_countrycode.dirty || phone_countrycode.touched)">
                         <small class="text-danger" *ngIf="phone_countrycode.errors?.['required']"> Country code is required </small>
                       </div>
-                    </div>
-                    <div class="form-group col-md-4">
+                    </div> -->
+                    <div class="form-group col-md-6">
                       <input type="text" #phone_dialCode="ngModel" class="form-control" id="phone_dialCode" [(ngModel)]= "affiliateModel.phone_dialCode" placeholder="Dial code" name="phone_dialCode">
                       <div *ngIf="phone_dialCode.invalid && (phone_dialCode.dirty || phone_dialCode.touched)">
                         <small class="text-danger" *ngIf="phone_dialCode.errors?.['required']"> Dail code is required </small>
                       </div>
                     </div>
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-6">
                       <input type="text" #phone="ngModel" class="form-control" id="phone" [(ngModel)]= "affiliateModel.phone" placeholder="Phone Number" name="phone">
                     </div>
                   </div>
@@ -208,7 +208,7 @@
                   </div>
                   <div class="row">
                     <div class="form-group form-check col-md-4 center">
-                      <input type="checkbox" #acceptTerms="ngModel" class="form-check-input" id="acceptTerms" required [(ngModel)]= "affiliateModel.acceptTerms" name="acceptTerms">
+                      <input type="checkbox" #acceptTerms="ngModel" class="sign-up-checkbox" id="acceptTerms" required [(ngModel)]= "affiliateModel.acceptTerms" name="acceptTerms">
                      
                       <label for="acceptTerms" class="form-check-label"
                         >I have read and agree to the Terms</label
@@ -227,24 +227,49 @@
                       <div *ngIf="otp.invalid && (otp.dirty || otp.touched)">
                         <small class="text-danger" *ngIf="otp.errors?.['required']"> OTP is required </small>
                       </div>
+                      <span *ngIf="showMessage" class="text-danger">{{
+                        showMessage
+                      }}</span>
                     </div>
                   </div>
                 </div>
           
                 <div class="form-group">
-                  <button type="submit" class="btn btn-primary" style="margin-right: 5px;" *ngIf="!showOTP" [disabled]="signupForm.form.invalid || !passWordMatched">Register</button>
-                  <button type="submit" class="btn btn-primary" style="margin-right: 5px;" *ngIf="showOTP" [disabled]="signupForm.form.invalid">Validate</button>
-                  <button
+                  <div class="row">
+                    <div class="col col-md-6 col-sm-6">
+                      <button type="submit" class="btn btn-success btn-block" *ngIf="!showOTP" [disabled]="signupForm.form.invalid || !passWordMatched">Register</button>
+                      <button type="submit" class="btn btn-primary" style="margin-right: 5px;" *ngIf="showOTP" [disabled]="signupForm.form.invalid">Validate</button>
+                    </div>
+                    <div class="col col-md-6 col-sm-6">
+                      <button type="button" class="btn btn-danger btn-block" *ngIf="!showOTP" (click)="onReset()">Reset</button>
+                    </div>
+                  </div>
+                  
+                  <!-- <button type="submit" class="btn btn-primary" style="margin-right: 5px;" *ngIf="!showOTP" [disabled]="signupForm.form.invalid || !passWordMatched">Register</button> -->
+                  
+                  
+                  <!-- <button
                     type="button"
                     (click)="onReset()"
                     class="btn btn-warning float-right"
                     *ngIf="!showOTP"
                   >
                     Reset
-                  </button>
+                  </button> -->
+
+                  
                 </div>
               </form>
             </div>
+            <ng-template #showRegSuccess>
+              <div class="row">
+                <div class="col-md-12">
+                  <span class="text-success">{{
+                    successMsg
+                  }}</span>
+                </div>
+              </div>
+            </ng-template>
           
             </div>
         </div>

@@ -10,7 +10,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 
 const routes: Routes = [
   { path: '', component: AuthLayoutComponent, children: AUTH_ROUTES, canActivate: [SecureInnerPagesGuard]},
-  { path: 'portal', component: DefaultLayoutComponent, children: PORTAL_ROUTES, canActivate: [AuthGuard]},
+  { path: '', component: DefaultLayoutComponent, children: PORTAL_ROUTES, canActivate: [AuthGuard]},
   { path: '**', component: PageNotFoundComponent}
 ];
 

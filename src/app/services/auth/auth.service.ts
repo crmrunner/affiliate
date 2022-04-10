@@ -41,6 +41,11 @@ export class AuthService {
     return this.http.post(apiBaseUrl, data);
   }
 
+  changePassword(data: any): Observable<any> {
+    const apiBaseUrl = con.baseUrl+'change_password/';
+    return this.http.post(apiBaseUrl, data);
+  }
+
   logOut(): Observable<any> {
     const apiBaseUrl = con.baseUrl+'logout';
     return this.http.post(apiBaseUrl, {});
