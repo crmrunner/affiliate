@@ -11,17 +11,10 @@ import { Affiliate } from '../../../models/affiliate/affiliate';
   styleUrls: ['./signup.component.css']
 })
 export class SignupComponent implements OnInit {
-  cars = [
-      { id: 1, name: 'Volvo' },
-      { id: 2, name: 'Saab' },
-      { id: 3, name: 'Opel' },
-      { id: 4, name: 'Audi' },
-  ];
-
-  genders = [
-    {'name': 'Male', value: 'Male'},
-    {'name': 'Female', value: 'Female'}
-  ]
+  // genders = [
+  //   {'name': 'Male', value: 'Male'},
+  //   {'name': 'Female', value: 'Female'}
+  // ]
 
   showOTP: boolean = false;
   serverErr: any = {};
@@ -49,7 +42,7 @@ export class SignupComponent implements OnInit {
   zip: string = '';
   address: string = '';
   street: string = '';
-  gender : any = null;
+  //gender : any = null;
   accountType: any = null;
   routingNumber: string = '';
   accountNumber: string = '';
@@ -61,11 +54,12 @@ export class SignupComponent implements OnInit {
   confPassword: string = '';
   acceptTerms: boolean = false;
   otp: string = '';
+  countryCodeReadOnly: boolean = false;
 
   accountTypes = [
     { name: 'checking', value: 'Checking' },
     { name: 'savings', value: 'Savings' },
-    { name: 'businessCheck', value: 'Business Check' }
+    { name: 'businessCheck', value: 'Business Checking' }
   ];
 
   eCheckTypes = [
@@ -83,7 +77,7 @@ export class SignupComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.affiliateModel = new Affiliate(this.f_name,  this.l_name,  this.email,  this.mobile_countrycode,  this.mobile_dialCode,  this.mobile,  this.phone_countrycode,  this.phone_dialCode,  this.phone,  this.country,  this.state,  this.city,  this.zip,  this.address,  this.street,  this.gender,  this.accountType,  this.routingNumber,  this.accountNumber,  this.nameOnAccount,  this.bankName,  this.echeckType,  this.checkNumber,  this.password,  this.confPassword, this.acceptTerms, this.otp);
+    this.affiliateModel = new Affiliate(this.f_name,  this.l_name,  this.email,  this.mobile_countrycode,  this.mobile_dialCode,  this.mobile,  this.phone_countrycode,  this.phone_dialCode,  this.phone,  this.country,  this.state,  this.city,  this.zip,  this.address,  this.street,  '',  this.accountType,  this.routingNumber,  this.accountNumber,  this.nameOnAccount,  this.bankName,  this.echeckType,  this.checkNumber,  this.password,  this.confPassword, this.acceptTerms, this.otp);
     this.getCountries();
   }
 
@@ -195,5 +189,18 @@ export class SignupComponent implements OnInit {
       this.passWordMatched = true;
     }
   }
-
+  
+  getPhoneCode(e: any) {
+    console.log('modelChanged: ', e);
+    let countryDetail = [];
+    countryDetail = this.countries.filter((data:any)=> data.name == e);
+    if(countryDetail.length > 0){
+      this.affiliateModel.mobile_dialCode = countryDetail[0].phonecode;
+      this.countryCodeReadOnly = true;
+    }else{
+      this.affiliateModel.mobile_dialCode = '';
+      this.countryCodeReadOnly = false;
+    }
+    console.log('countryDetail: ', countryDetail);
+  }
 }

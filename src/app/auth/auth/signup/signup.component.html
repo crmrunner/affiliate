@@ -12,8 +12,9 @@
            
             <div class="register-form" *ngIf="successMsg==''; else showRegSuccess">
               <form #signupForm="ngForm" (ngSubmit)="onSubmit()">
-                <div *ngIf="!showOTP">
+                <div *ngIf="!showOTP; else showOtp">
                   <div class="row">
+                    <h3>----------Personal Informations----------</h3>
                     <div class="form-group col-md-6">
                       <input type="text" #f_name="ngModel" class="form-control" id="f_name" required [(ngModel)]= "affiliateModel.f_name" placeholder="First Name*" name="f_name" autocomplete="off">
                       <div *ngIf="f_name.invalid && (f_name.dirty || f_name.touched)">
@@ -30,14 +31,14 @@
 
                   </div>
                   <div class="row">
-                    <div class="form-group col-md-6">
+                    <!-- <div class="form-group col-md-6">
                       <ng-select #gender="ngModel" required [(ngModel)]= "affiliateModel.gender" name="gender" placeholder="Gender*">
                         <ng-option *ngFor="let gender of genders" [value]="gender.value">{{gender.name}}</ng-option>
                       </ng-select>
                       <div *ngIf="gender.invalid && (gender.dirty || gender.touched)">
                         <small class="text-danger" *ngIf="gender.errors?.['required']">Gender is required </small>
                       </div>
-                    </div>
+                    </div> -->
                     <div class="form-group col-md-6">
                       <input type="text" #email="ngModel" class="form-control input-field" id="email"  pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}" required [(ngModel)]= "affiliateModel.email" placeholder="Email Address*" name="email" autocomplete="off">
 
@@ -75,22 +76,7 @@
                     </div>
                   </div>
                   <div class="row">
-                    <div class="form-group col-md-4">
-                      <ng-select #country="ngModel" required [(ngModel)]= "affiliateModel.country" name="country" placeholder="Country*">
-                        <ng-option *ngFor="let country of countries" [value]="country.name">{{country.name}}</ng-option>
-                      </ng-select>
-                      <div *ngIf="country.invalid && (country.dirty || country.touched)">
-                        <small class="text-danger" *ngIf="country.errors?.['required']">Country is required </small>
-                      </div>
-                    </div>
-                    <div class="form-group col-md-4">
-                      <input type="text" #state="ngModel" class="form-control" id="state" [(ngModel)]= "affiliateModel.state" placeholder="State" name="state">
-                    </div>
-                    <div class="form-group col-md-4">
-                      <input type="text" #city="ngModel" class="form-control" id="city" [(ngModel)]= "affiliateModel.city" placeholder="City" name="city">
-                    </div>
-                  </div>
-                  <div class="row">
+                    <h3>----------Address Details----------</h3>
                     <div class="form-group col-md-4">
                       <input type="text" #address="ngModel" class="form-control" id="address" required [(ngModel)]= "affiliateModel.address" placeholder="Address*" name="address">
                       <div *ngIf="address.invalid && (address.dirty || address.touched)">
@@ -104,15 +90,32 @@
                       </div> -->
                     </div>
                     <div class="form-group col-md-4">
+                      <input type="text" #city="ngModel" class="form-control" id="city" [(ngModel)]= "affiliateModel.city" placeholder="City" name="city">
+                    </div>
+                    
+                  </div>
+                  <div class="row">                    
+                    <div class="form-group col-md-4">
+                      <input type="text" #state="ngModel" class="form-control" id="state" [(ngModel)]= "affiliateModel.state" placeholder="State" name="state">
+                    </div>
+                    <div class="form-group col-md-4">
                       <input type="text" #zip="ngModel" class="form-control" id="zip" required [(ngModel)]= "affiliateModel.zip" placeholder="Zip*" name="zip" pattern="[0-9]{6}">
                       <div *ngIf="zip.invalid && (zip.dirty || zip.touched)">
                         <small class="text-danger" *ngIf="zip.errors?.['required']"> Zip is required </small>
                         <small class="text-danger" *ngIf="zip.errors?.['pattern']"> Zip must be 6 digit number </small>
                       </div>
                     </div>
+                    <div class="form-group col-md-4">
+                      <ng-select #country="ngModel" required [(ngModel)]= "affiliateModel.country" name="country" placeholder="Country*" (ngModelChange)="getPhoneCode($event)">
+                        <ng-option *ngFor="let country of countries" [value]="country.name">{{country.name}}</ng-option>
+                      </ng-select>
+                      <div *ngIf="country.invalid && (country.dirty || country.touched)">
+                        <small class="text-danger" *ngIf="country.errors?.['required']">Country is required </small>
+                      </div>
+                    </div>
                   </div>
-
                   <div class="row">
+                    <h3>----------Contact Informations----------</h3>
                     <!--<div class="form-group col-md-4">
                       <input type="text" #mobile_countrycode="ngModel" class="form-control" id="mobile_countrycode" required [(ngModel)]= "affiliateModel.mobile_countrycode" placeholder="Country code*" name="mobile_countrycode" [readonly]="countryCodeReadOnly ? true : false">
                       <div *ngIf="mobile_countrycode.invalid && (mobile_countrycode.dirty || mobile_countrycode.touched)">
@@ -120,7 +123,7 @@
                       </div>
                     </div> -->
                     <div class="form-group col-md-6">
-                      <input type="text" #mobile_dialCode="ngModel" class="form-control" id="mobile_dialCode" required [(ngModel)]= "affiliateModel.mobile_dialCode" placeholder="Dial Code*" name="mobile_dialCode">
+                      <input type="text" #mobile_dialCode="ngModel" class="form-control" id="mobile_dialCode" required [(ngModel)]= "affiliateModel.mobile_dialCode" placeholder="Dial Code*" name="mobile_dialCode" [disabled]="countryCodeReadOnly ? true : false">
                       <div *ngIf="mobile_dialCode.invalid && (mobile_dialCode.dirty || mobile_dialCode.touched)">
                         <small class="text-danger" *ngIf="mobile_dialCode.errors?.['required']"> Dial code is required </small>
                       </div>
@@ -152,6 +155,7 @@
                   </div>
 
                   <div class="row">
+                    <h3>----------Bank Informations----------</h3>
                     <div class="form-group col-md-4">
                       <ng-select #accountType="ngModel" required [(ngModel)]= "affiliateModel.accountType" name="accountType" placeholder="Account Type*">
                         <ng-option *ngFor="let accountType of accountTypes" [value]="accountType.name">{{accountType.value}}</ng-option>
@@ -161,14 +165,14 @@
                       </div>
                     </div>
                     <div class="form-group col-md-4">
-                      <input type="text" #routingNumber="ngModel" class="form-control" id="routingNumber" required [(ngModel)]= "affiliateModel.routingNumber" placeholder="Routing Number*" name="routingNumber" maxlength="9">
+                      <input type="text" #routingNumber="ngModel" class="form-control" id="routingNumber" required [(ngModel)]= "affiliateModel.routingNumber" autocomplete="off" placeholder="Routing Number*" name="routingNumber" maxlength="9">
                       <div *ngIf="routingNumber.invalid && (routingNumber.dirty || routingNumber.touched)">
                         <small class="text-danger" *ngIf="routingNumber.errors?.['required']"> Routing Number is required </small>
                         <small class="text-danger" *ngIf="routingNumber.errors?.['maxlength']"> Routing Number should not exceed 9 characters </small>
                       </div>
                     </div>
                     <div class="form-group col-md-4">
-                      <input type="text" #accountNumber="ngModel" class="form-control" id="accountNumber" required [(ngModel)]= "affiliateModel.accountNumber" placeholder="Account Number*" name="accountNumber" maxlength="17">
+                      <input type="text" #accountNumber="ngModel" class="form-control" id="accountNumber" required [(ngModel)]= "affiliateModel.accountNumber" autocomplete="off" placeholder="Account Number*" name="accountNumber" maxlength="17">
                       <div *ngIf="accountNumber.invalid && (accountNumber.dirty || accountNumber.touched)">
                         <small class="text-danger" *ngIf="accountNumber.errors?.['pattern']"> Account Number is required </small>
                         <small class="text-danger" *ngIf="accountNumber.errors?.['maxlength']"> Account Number should not exceed 17 characters </small>
@@ -176,20 +180,20 @@
                     </div>
                   </div>
                   <div class="row">
-                    <div class="form-group col-md-3">
-                      <input type="text" #nameOnAccount="ngModel" class="form-control" id="nameOnAccount" required [(ngModel)]= "affiliateModel.nameOnAccount" placeholder="Name on Account*" name="nameOnAccount" maxlength="22">
+                    <div class="form-group col-md-4">
+                      <input type="text" #nameOnAccount="ngModel" class="form-control" id="nameOnAccount" required [(ngModel)]= "affiliateModel.nameOnAccount" autocomplete="off" placeholder="Name on Account*" name="nameOnAccount" maxlength="22">
                       <div *ngIf="nameOnAccount.invalid && (nameOnAccount.dirty || nameOnAccount.touched)">
                         <small class="text-danger" *ngIf="nameOnAccount.errors?.['pattern']"> Name on account is required </small>
                         <small class="text-danger" *ngIf="nameOnAccount.errors?.['maxlength']"> Name on account should not exceed 22 characters </small>
                       </div>
                     </div>
-                    <div class="form-group col-md-3">
-                      <input type="text" #bankName="ngModel" class="form-control" id="bankName" required [(ngModel)]= "affiliateModel.bankName" placeholder="Bank Name*" name="bankName">
+                    <div class="form-group col-md-4">
+                      <input type="text" #bankName="ngModel" autocomplete="off" class="form-control" id="bankName" required [(ngModel)]= "affiliateModel.bankName" placeholder="Bank Name*" name="bankName">
                       <div *ngIf="bankName.invalid && (bankName.dirty || bankName.touched)">
                         <small class="text-danger" *ngIf="bankName.errors?.['pattern']"> Bank Name is required </small>
                       </div>
                     </div>
-                    <div class="form-group col-md-3">
+                    <!-- <div class="form-group col-md-3">
 
                       <ng-select #echeckType="ngModel" required [(ngModel)]= "affiliateModel.echeckType" name="echeckType" placeholder="e-Check Type*">
                         <ng-option *ngFor="let eCheckType of eCheckTypes" [value]="eCheckType.name">{{eCheckType.value}}</ng-option>
@@ -197,9 +201,9 @@
                       <div *ngIf="echeckType.invalid && (echeckType.dirty || echeckType.touched)">
                         <small class="text-danger" *ngIf="echeckType.errors?.['required']">e-Check Type is required </small>
                       </div>
-                    </div>
-                    <div class="form-group col-md-3">
-                      <input type="text" #checkNumber="ngModel" class="form-control" id="checkNumber" required [(ngModel)]= "affiliateModel.checkNumber" placeholder="Check Number*" name="checkNumber" maxlength="15">
+                    </div> -->
+                    <div class="form-group col-md-4">
+                      <input type="text" #checkNumber="ngModel" autocomplete="off" class="form-control" id="checkNumber" required [(ngModel)]= "affiliateModel.checkNumber" placeholder="Check Number*" name="checkNumber" maxlength="15">
                       <div *ngIf="checkNumber.invalid && (checkNumber.dirty || checkNumber.touched)">
                         <small class="text-danger" *ngIf="checkNumber.errors?.['required']"> Check Number is required </small>
                         <small class="text-danger" *ngIf="checkNumber.errors?.['maxlength']"> Check number not exceed 15 characters </small>
@@ -220,19 +224,21 @@
                   </div>
                 </div>
 
-                <div *ngIf="showOTP">
-                  <div class="row">
-                    <div class="form-group col-md-6 center">
-                      <input type="text" #otp="ngModel" class="form-control" id="otp" required [(ngModel)]= "affiliateModel.otp" placeholder="OTP*" name="otp" value = "123456">
-                      <div *ngIf="otp.invalid && (otp.dirty || otp.touched)">
-                        <small class="text-danger" *ngIf="otp.errors?.['required']"> OTP is required </small>
+                <ng-template #showOtp>
+                  <div>
+                    <div class="row">
+                      <div class="form-group col-md-6 center">
+                        <input type="text" #otp="ngModel" class="form-control" id="otp" required [(ngModel)]= "affiliateModel.otp" placeholder="OTP*" name="otp" value = "123456">
+                        <div *ngIf="otp.invalid && (otp.dirty || otp.touched)">
+                          <small class="text-danger" *ngIf="otp.errors?.['required']"> OTP is required </small>
+                        </div>
+                        <span *ngIf="showMessage" class="text-danger">{{
+                          showMessage
+                        }}</span>
                       </div>
-                      <span *ngIf="showMessage" class="text-danger">{{
-                        showMessage
-                      }}</span>
                     </div>
                   </div>
-                </div>
+                </ng-template>
           
                 <div class="form-group">
                   <div class="row">
