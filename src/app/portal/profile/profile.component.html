@@ -6,7 +6,7 @@
       <div class="row gx-4 mb-2">
         <div class="col-auto">
           <div class="avatar avatar-xl position-relative">
-            <img src="../assets/img/bruce-mars.jpg" alt="profile_image" class="w-100 border-radius-lg shadow-sm">
+            <img src="{{profileDetails.propic}}" alt="profile_image" class="w-100 border-radius-lg shadow-sm">
           </div>
         </div>
         <div class="col-auto my-auto">
@@ -101,10 +101,10 @@
             <div class="card card-plain h-100">
               <div class="card-header pb-0 p-3">
                 <div class="row">
-                  <div class="col-md-8 d-flex align-items-center">
+                  <div class="col-auto d-flex align-items-center">
                     <h6 class="mb-0">Profile Information</h6>
                   </div>
-                  <div class="col-md-4 text-end">
+                  <div class="col-auto text-end">
                     <a href="javascript:;">
                       <i class="fas fa-user-edit text-secondary text-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Profile"></i>
                     </a>
@@ -133,6 +133,42 @@
                       <i class="fab fa-instagram fa-lg"></i>
                     </a>
                   </li> -->
+                  <li class="list-group-item border-0 ps-0 pb-0">
+                    <div class="row">
+                      <div class="col-auto d-flex align-items-center">
+                        <form [formGroup]="myForm" (ngSubmit)="submit()">
+                          <div class="row">
+                            <div class="col-auto">
+                              <div class="form-group">
+                                <label class="custom-file-upload">
+                                  <input formControlName="file"
+                                  id="file" 
+                                  type="file"
+                                  class="form-control"
+                                  accept=".jpg,.png"
+                                  (change)="onFileChange($event)"/>
+                                  <i class="fa fa-cloud-upload"></i> Change Profile Image
+                                </label>
+                                <div *ngIf="f['file'].touched && f['file'].invalid" class="alert alert-danger">
+                                  <div *ngIf="f['file'].errors && f['file'].errors['required']">File is required.</div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-auto">
+                              <img [src]="imageSrc" *ngIf="imageSrc" style="width:100px">
+                            </div>
+                          </div>
+                          <div class="form-group">                            
+                            <button class="btn btn-primary" type="submit">Submit</button><br />
+                            <span class="alert" style="color:green" *ngIf = "successMsg != '' && failureMsg == ''">{{successMsg}}</span>
+                            <span class="alert" style="color: red;" *ngIf = "successMsg == '' && failureMsg != ''">{{failureMsg}}</span>
+                            <!-- <button type="submit" (click)="onSubmit()">Upload</button> -->
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                    
+                  </li>
                 </ul>
               </div>
             </div>

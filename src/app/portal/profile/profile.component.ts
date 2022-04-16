@@ -3,6 +3,7 @@ import { DashboardService } from '../../services/dashboard/dashboard.service';
 import { AuthService } from '../../services/auth/auth.service';
 import { UserModel } from '../../models/user/user';
 import {ActivatedRoute, Router} from '@angular/router';
+import { FormGroup, FormControl, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-profile',
@@ -20,6 +21,16 @@ export class ProfileComponent implements OnInit {
   inactiveButton: boolean = false;
   serverErrorMsg: string = '';
   serverSuccessMsg: string = '';
+  imgChangeEvt: any = '';
+  imageSrc: string = '';
+  images: any;
+  successMsg: string = '';
+  failureMsg: string = '';
+
+  myForm = new FormGroup({
+    file: new FormControl('', [Validators.required]),
+    fileSource: new FormControl('', [Validators.required])
+  });
 
   constructor(private router: Router, private dashboardService : DashboardService, private authService: AuthService, private route: ActivatedRoute) {
     this.userModel = new UserModel('','','','');
@@ -82,6 +93,80 @@ export class ProfileComponent implements OnInit {
     }else {
       this.serverErrorMsg = '';
     }
+  }
+
+  get f(){
+    return this.myForm.controls;
+  }
+ 
+  onFileChange(event:any) {
+    const reader = new FileReader();
+     
+    if(event.target.files && event.target.files.length) {
+      console.log('event.target.files: ',event.target.files);
+      const file = event.target.files[0];
+      this.images = file;
+      reader.readAsDataURL(file);
+     
+      reader.onload = () => {
+    
+        this.imageSrc = reader.result as string;
+        console.log('reader.result: ',reader.result);
+        // this.myForm.patchValue({
+        //   file: this.images
+        // });
+    
+      };
+    
+    }
+  }
+   
+  /**
+   * Write code on Method
+   *
+   * @return response()
+   */
+  submit(){
+    console.log('this.images: ', this.images);
+    if(this.images.type != "image/jpeg" && this.images.type != "image/png") {
+      this.successMsg = '';
+      this.failureMsg = 'Please upload jpeg, jpg or png image';
+    }
+    else if(!this.images){
+      this.successMsg = '';
+      this.failureMsg = 'Please upload the image';
+    }else{
+       //console.log('MyForm: ', this.myForm.value);
+       const formData = new FormData();
+       //console.log('this.myForm.controls: ', this.myForm.controls);
+       formData.append('file', this.images);
+       //let param = {'fileSource': this.myForm.value.fileSource};
+       this.images = '';
+       this.imageSrc = '';
+       this.dashboardService.getProfilePictureInfo(formData).subscribe({
+         next: (res) => {
+           if(!res.error) {
+             console.log('profile: ', res);
+             this.profileDetails.propic = res.data;
+             this.successMsg = res.message;
+             this.failureMsg = '';
+           }else {
+             this.failureMsg = res.message;
+             this.successMsg = '';
+           }
+         },
+         error: (e) => {
+           console.log(e);
+         }
+       });
+    }
+  
+    this.myForm.reset();
+    // this.http.post('http://localhost:8001/upload.php', this.myForm.value)
+    //   .subscribe(res => {
+    //     console.log(res);
+    //     alert('Uploaded Successfully.');
+    //   })
   }
 
 }

@@ -19,4 +19,9 @@ export class DashboardService {
     const apiBaseUrl = con.baseUrl+'dashboard';
     return this.http.post(apiBaseUrl, data);
   }
+
+  getProfilePictureInfo(data: any): Observable<any> {
+    const apiBaseUrl = con.baseUrl+'changeProfileImage';
+    return this.http.post(apiBaseUrl, data);
+  }
 }
