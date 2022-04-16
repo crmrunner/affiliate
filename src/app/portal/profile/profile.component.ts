@@ -128,14 +128,14 @@ export class ProfileComponent implements OnInit {
    */
   submit(){
     console.log('this.images: ', this.images);
-    if(this.images.type != "image/jpeg" && this.images.type != "image/png") {
-      this.successMsg = '';
-      this.failureMsg = 'Please upload jpeg, jpg or png image';
-    }
-    else if(!this.images){
+    if(!this.images){
       this.successMsg = '';
       this.failureMsg = 'Please upload the image';
-    }else{
+    }
+    else if(this.images.type != "image/jpeg" && this.images.type != "image/png") {
+      this.successMsg = '';
+      this.failureMsg = 'Please upload jpeg, jpg or png image';
+    } else{
        //console.log('MyForm: ', this.myForm.value);
        const formData = new FormData();
        //console.log('this.myForm.controls: ', this.myForm.controls);
