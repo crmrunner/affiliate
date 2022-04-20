@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import { ClipboardService } from 'ngx-clipboard';
 import * as con from '../../services/app.config';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { LoadingService } from '../../services/loading/loading.service';
 //import { forkJoin } from 'rxjs';  // RxJS 6 syntax
 
 @Component({
@@ -27,8 +28,10 @@ export class HomeComponent implements OnInit {
   direction = "";
   subscriberArray: String[] = [];
   canProceed: boolean = true;
+
+  loading$ = this.loader.loading$;
   
-  constructor(private router: Router, private dashboardService : DashboardService, private clipboardApi: ClipboardService) {
+  constructor(private router: Router, private dashboardService : DashboardService, private clipboardApi: ClipboardService, private loader: LoadingService) {
     this.dashBoardDetails = {};
     this.subscribedData = [];
     this.sum = 20;

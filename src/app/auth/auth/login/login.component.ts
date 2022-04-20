@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
 import { AuthService } from '../../../services/auth/auth.service';
+import { LoadingService } from '../../../services/loading/loading.service';
 import { UserModel } from '../../../models/user/user';
 import { NgbModal, ModalDismissReasons, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { ForgotPasswordComponent } from '../forgot-password/forgot-password.component';
@@ -18,8 +19,10 @@ export class LoginComponent implements OnInit {
   userModel: any;
   closeResult: string = '';
   modalOptions:NgbModalOptions;
+
+  loading$ = this.loader.loading$;
   
-  constructor(private router: Router, private authService: AuthService, public modalService: NgbModal) {
+  constructor(private router: Router, private authService: AuthService, private loader: LoadingService, public modalService: NgbModal) {
     let token = this.gettoken();
     console.log('token', token);
     // if(!!token) {

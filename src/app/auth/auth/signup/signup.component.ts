@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import { AuthService } from '../../../services/auth/auth.service';
 import { MiscService } from '../../../services/misc/misc.service';
 import { Affiliate } from '../../../models/affiliate/affiliate';
+import { LoadingService } from '../../../services/loading/loading.service';
 
 @Component({
   selector: 'app-signup',
@@ -73,7 +74,9 @@ export class SignupComponent implements OnInit {
 
   submitted = false;
   affiliateModel: any;
-  constructor(private formBuilder: FormBuilder, private authService: AuthService, private miscService: MiscService, private router: Router) {
+  loading$ = this.loader.loading$;
+
+  constructor(private formBuilder: FormBuilder, private authService: AuthService, private miscService: MiscService, private router: Router, private loader: LoadingService) {
   }
 
   ngOnInit(): void {

@@ -1,8 +1,9 @@
-<div class="container-fluid px-2 px-md-4">
     <div class="page-header min-height-300 border-radius-xl mt-4" style="background-image: url('../assets/img/000-how-to-make-high-resolution-images-on-your-computer-or-smartphone-4588802-5c83b08746e0fb0001136657.jpg');">
       <!-- <span class="mask  bg-gradient-primary  opacity-6"></span> -->
     </div>
     <div class="card card-body mx-3 mx-md-4 mt-n6">
+      <div class="container-fluid px-2 px-md-4">
+        <app-loader *ngIf="loading$ | async"></app-loader>
       <div class="row gx-4 mb-2">
         <div class="col-auto">
           <div class="avatar avatar-xl position-relative">

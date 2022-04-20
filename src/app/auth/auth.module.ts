@@ -10,6 +10,7 @@ import { LoginComponent } from '../auth/auth/login/login.component';
 import { StrengthCheckerComponent } from '../strength-checker/strength-checker.component';
 import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './auth/reset-password/reset-password.component';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { ResetPasswordComponent } from './auth/reset-password/reset-password.com
     LoginComponent,
     StrengthCheckerComponent,
     ForgotPasswordComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    //LoaderComponent
   ],
   imports: [
     CommonModule,
@@ -26,7 +28,8 @@ import { ResetPasswordComponent } from './auth/reset-password/reset-password.com
     MaterialDesignModule,
     FormsModule,
     ReactiveFormsModule,
-    NgSelectModule
+    NgSelectModule,
+    SharedModule
   ]
 })
 export class AuthModule { }

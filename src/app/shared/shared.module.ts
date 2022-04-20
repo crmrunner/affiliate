@@ -9,15 +9,17 @@ import { DefaultHeaderComponent } from './default-header/default-header.componen
 import { DefaultFooterComponent } from './default-footer/default-footer.component';
 import { DefaultNavComponent } from './default-nav/default-nav.component';
 import { SiteButtonComponent } from './site-button/site-button/site-button.component';
+import { LoaderComponent } from './loader/loader.component';
 
 @NgModule({
-  declarations: [AuthHeaderComponent, AuthFooterComponent, DefaultHeaderComponent, DefaultFooterComponent, DefaultNavComponent, SiteButtonComponent],
+  declarations: [AuthHeaderComponent, AuthFooterComponent, DefaultHeaderComponent, DefaultFooterComponent, DefaultNavComponent, SiteButtonComponent, LoaderComponent],
   exports: [
     AuthHeaderComponent,
     AuthFooterComponent,
     DefaultHeaderComponent,
     DefaultFooterComponent,
-    DefaultNavComponent
+    DefaultNavComponent,
+    LoaderComponent
   ],
   imports: [
     CommonModule,

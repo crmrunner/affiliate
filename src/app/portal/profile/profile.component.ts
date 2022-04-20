@@ -4,6 +4,7 @@ import { AuthService } from '../../services/auth/auth.service';
 import { UserModel } from '../../models/user/user';
 import {ActivatedRoute, Router} from '@angular/router';
 import { FormGroup, FormControl, Validators} from '@angular/forms';
+import { LoadingService } from '../../services/loading/loading.service';
 
 @Component({
   selector: 'app-profile',
@@ -32,7 +33,9 @@ export class ProfileComponent implements OnInit {
     fileSource: new FormControl('', [Validators.required])
   });
 
-  constructor(private router: Router, private dashboardService : DashboardService, private authService: AuthService, private route: ActivatedRoute) {
+  loading$ = this.loader.loading$;
+
+  constructor(private router: Router, private dashboardService : DashboardService, private authService: AuthService, private route: ActivatedRoute, private loader: LoadingService) {
     this.userModel = new UserModel('','','','');
     this.profileDetails = {};
   }

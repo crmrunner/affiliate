@@ -8,12 +8,14 @@ import { HomeComponent } from './home/home.component';
 import { ClipboardModule } from 'ngx-clipboard';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { ProfileComponent } from './profile/profile.component';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
   declarations: [
     HomeComponent,
-    ProfileComponent
+    ProfileComponent,
+    //LoaderComponent
   ],
   imports: [
     CommonModule,
@@ -22,7 +24,8 @@ import { ProfileComponent } from './profile/profile.component';
     ClipboardModule,
     InfiniteScrollModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SharedModule
   ]
 })
 export class PortalModule { }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../../services/auth/auth.service';
 import { UserModel } from '../../../models/user/user';
 import { ActivatedRoute, Router } from '@angular/router';
+import { LoadingService } from '../../../services/loading/loading.service';
 
 @Component({
   selector: 'app-reset-password',
@@ -20,7 +21,9 @@ export class ResetPasswordComponent implements OnInit {
   serverErrorMsg: string = '';
   serverSuccessMsg: string = '';
 
-  constructor(private authService: AuthService, private route: ActivatedRoute, private router: Router ) {
+  loading$ = this.loader.loading$;
+
+  constructor(private authService: AuthService, private route: ActivatedRoute, private router: Router, private loader: LoadingService) {
     this.userModel = new UserModel('','','','');
    }
 

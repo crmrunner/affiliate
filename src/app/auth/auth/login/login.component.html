@@ -14,6 +14,7 @@
               validationErr
             }}</span>
           </div>
+          <app-loader *ngIf="loading$ | async"></app-loader>
           <form #loginForm="ngForm" (ngSubmit)="doLogin()">
                 <div class="form-group">
                   <input type="text" #username="ngModel" class="form-control input-field" id="username"  pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}" required [(ngModel)]= "userModel.username" placeholder="Username/Email Address*" name="username" autocomplete="off">
