@@ -6,7 +6,7 @@
         <a [routerLink]="['/']" class="logo-name text-lg text-center">
           <img src="assets/img/logo.png" alt="">
       </a>
-      <h3>Welcome User. Please register here.</h3>
+      <h3>Welcome to our affiliate portal</h3>
         <div class="">
           <div class="login-box" id="card" style="text-align: center;">          
             <app-loader *ngIf="loading$ | async"></app-loader>
@@ -136,13 +136,13 @@
                       </div>
                     </div>
                   </div>
-                  <div class="row">
-                    <!-- <div class="form-group col-md-4">
+                  <!-- <div class="row">
+                    <div class="form-group col-md-4">
                       <input type="text" #phone_countrycode="ngModel" class="form-control" id="phone_countrycode" [(ngModel)]= "affiliateModel.phone_countrycode" placeholder="Country code" name="phone_countrycode" [readonly]="countryCodeReadOnly ? true : false">
                       <div *ngIf="phone_countrycode.invalid && (phone_countrycode.dirty || phone_countrycode.touched)">
                         <small class="text-danger" *ngIf="phone_countrycode.errors?.['required']"> Country code is required </small>
                       </div>
-                    </div> -->
+                    </div>
                     <div class="form-group col-md-6">
                       <input type="text" #phone_dialCode="ngModel" class="form-control" id="phone_dialCode" [(ngModel)]= "affiliateModel.phone_dialCode" placeholder="Dial code" name="phone_dialCode">
                       <div *ngIf="phone_dialCode.invalid && (phone_dialCode.dirty || phone_dialCode.touched)">
@@ -152,7 +152,7 @@
                     <div class="form-group col-md-6">
                       <input type="text" #phone="ngModel" class="form-control" id="phone" [(ngModel)]= "affiliateModel.phone" placeholder="Phone Number" name="phone">
                     </div>
-                  </div>
+                  </div> -->
 
                   <div class="row">
                     <h3>----------Bank Informations----------</h3>

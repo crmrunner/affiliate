@@ -92,11 +92,11 @@ export class SignupComponent implements OnInit {
       return;
     }
 
-    if(!this.affiliateModel.phone){
-      delete this.affiliateModel.phone_dialCode;
-      delete this.affiliateModel.phone_countrycode;
-      delete this.affiliateModel.phone;
-    }
+    // if(!this.affiliateModel.phone){
+    //   delete this.affiliateModel.phone_dialCode;
+    //   delete this.affiliateModel.phone_countrycode;
+    //   delete this.affiliateModel.phone;
+    // }
     console.log('this.form.value: ', this.affiliateModel);
     this.authService.registration(this.affiliateModel).subscribe({
       next: (res) => {
