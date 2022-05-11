@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import * as con from '../app.config';
 
@@ -27,8 +27,19 @@ export class AuthService {
   }
 
   registration(data: any): Observable<any> {
+    console.log('regService: ', typeof data.bankProof);
+    
+    const formData: FormData = new FormData();
+    for(let i in data){
+      formData.append(i, data[i]);
+    }
+    //formData.append('ComponentId', componentId);
+    // const httpOptions = {
+    //   headers: new HttpHeaders({
+    //     'Content-Type':  'application/json'
+    // })};
     const apiBaseUrl = con.baseUrl+'registration';
-    return this.http.post(apiBaseUrl, data);
+    return this.http.post(apiBaseUrl, formData);
   }
 
   forgotPassword(data: any): Observable<any> {
@@ -58,5 +69,15 @@ export class AuthService {
     console.log('isLoggedIn:', spl);
     return user !== null ? true : false;
   }
+
+  getFormUrlEncoded(toConvert: any) {
+		const formBody = [];
+		for (const property in toConvert) {
+			const encodedKey = encodeURIComponent(property);
+			const encodedValue = encodeURIComponent(toConvert[property]);
+			formBody.push(encodedKey + '=' + encodedValue);
+		}
+		return formBody.join('&');
+	}
 
 }

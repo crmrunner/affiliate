@@ -26,6 +26,7 @@ export class Affiliate {
     confPassword: string;
     acceptTerms: boolean;
     otp: string;
+    bankProof: any;
 
     constructor(
         f_name : string,
@@ -54,7 +55,8 @@ export class Affiliate {
         password: string,
         confPassword: string,
         acceptTerms: boolean,
-        otp: string
+        otp: string,
+        bankProof: any
     ) {
         this.f_name = f_name;
         this.l_name = l_name ;
@@ -83,5 +85,6 @@ export class Affiliate {
         this.confPassword = confPassword;
         this.acceptTerms = acceptTerms;
         this.otp = otp;
+        this.bankProof = bankProof;
     }
 }

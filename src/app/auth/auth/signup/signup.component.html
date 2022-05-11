@@ -11,7 +11,7 @@
           <div class="login-box" id="card" style="text-align: center;">          
             <app-loader *ngIf="loading$ | async"></app-loader>
             <div class="register-form" *ngIf="successMsg==''; else showRegSuccess">
-              <form #signupForm="ngForm" (ngSubmit)="onSubmit()">
+              <form #signupForm="ngForm" enctype="multipart/form-data" (ngSubmit)="onSubmit()">
                 <div *ngIf="!showOTP; else showOtp">
                   <div class="row">
                     <h3>----------Personal Informations----------</h3>
@@ -27,6 +27,9 @@
                       <div *ngIf="l_name.invalid && (l_name.dirty || l_name.touched)">
                         <small class="text-danger" *ngIf="l_name.errors?.['required']"> Last name is required </small>
                       </div>
+                      <span *ngIf="!!serverErr.l_name" class="text-danger">{{
+                        serverErr.l_name
+                      }}</span>
                     </div>
 
                   </div>
@@ -91,6 +94,9 @@
                     </div>
                     <div class="form-group col-md-4">
                       <input type="text" #city="ngModel" class="form-control" id="city" [(ngModel)]= "affiliateModel.city" placeholder="City" name="city">
+                      <span *ngIf="serverErr.city" class="text-danger">{{
+                        serverErr.city
+                      }}</span>
                     </div>
                     
                   </div>
@@ -210,6 +216,23 @@
                       </div>
                     </div>
                   </div>
+                  <div class="row">
+                    <div class="form-group form-check col-md-4 center">
+                      <input type="file" #bankProof accept=".jpg,.png,.pdf" class="form-control" id="bankProof" required  name="bankProof" (change)="onFileChange($event)">
+                      <div>
+                        <small class="text-success" style="font-style: italic;">(**Bank Proof document should be in jpg, png or pdf and not more than 5 mb) </small>
+                      </div>
+                      <!-- <div *ngIf="bankProof.invalid && (bankProof.dirty || bankProof.touched)">
+                        <small class="text-danger" *ngIf="bankProof.errors?.['required']"> Bank Proof is required </small>
+                      </div> -->
+                      <span *ngIf="!!serverErr.bankProof" class="text-danger">{{
+                        serverErr.bankProof
+                      }}</span>
+                    </div>
+                    <div class="form-group form-check col-md-4 center">
+                      <img [src]="imageSrc" *ngIf="imageSrc && images.type != 'application/pdf'" style="width:100px">
+                    </div>
+                    </div>
                   <div class="row">
                     <div class="form-group form-check col-md-4 center">
                       <input type="checkbox" #acceptTerms="ngModel" class="sign-up-checkbox" id="acceptTerms" required [(ngModel)]= "affiliateModel.acceptTerms" name="acceptTerms">
